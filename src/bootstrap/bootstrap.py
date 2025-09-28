@@ -346,7 +346,7 @@ def default_build_triple(verbose):
             else:
                 kernel = "unknown-linux-gnu"
     elif kernel == "SunOS":
-        kernel = "pc-solaris"
+        kernel = "unknown-illumos"
         # On Solaris, uname -m will return a machine classification instead
         # of a cpu type, so uname -p is recommended instead.  However, the
         # output from that option is too generic for our purposes (it will

@@ -5,12 +5,12 @@
 //! parent directory, and otherwise documentation can be found throughout the `build`
 //! directory in each respective module.
 
-use std::fs::{self, OpenOptions, TryLockError};
-use std::io::{self, BufRead, BufReader, IsTerminal, Read, Write};
+use std::fs::{self, OpenOptions};
+use std::io::{self, BufRead, BufReader, IsTerminal, Write};
 use std::path::Path;
 use std::str::FromStr;
 use std::time::Instant;
-use std::{env, process};
+use std::env;
 
 use bootstrap::{
     Build, CONFIG_CHANGE_HISTORY, ChangeId, Config, Flags, Subcommand, debug,
@@ -38,11 +38,12 @@ fn main() {
     debug!("parsing config based on flags");
     let config = Config::parse(flags);
 
-    let mut build_lock;
+    // let mut build_lock;
 
     if !config.bypass_bootstrap_lock {
         // Display PID of process holding the lock
         // PID will be stored in a lock file
+        /*
         let lock_path = config.out.join("lock");
         build_lock = t!(fs::OpenOptions::new()
             .read(true)
@@ -67,6 +68,7 @@ fn main() {
         }));
         t!(build_lock.set_len(0));
         t!(build_lock.write_all(process::id().to_string().as_bytes()));
+        */
     }
 
     // check_version warnings are not printed during setup, or during CI

@@ -92,13 +92,13 @@ unsafe fn configure_llvm(sess: &Session) {
         if sess.target.generate_arange_section
             && !sess.opts.unstable_opts.no_generate_arange_section
         {
-            add("-generate-arange-section", false);
+            //    add("-generate-arange-section", false);
         }
 
         match sess.opts.unstable_opts.merge_functions.unwrap_or(sess.target.merge_functions) {
             MergeFunctions::Disabled | MergeFunctions::Trampolines => {}
             MergeFunctions::Aliases => {
-                add("-mergefunc-use-aliases", false);
+                //        add("-mergefunc-use-aliases", false);
             }
         }
 
@@ -115,10 +115,10 @@ unsafe fn configure_llvm(sess: &Session) {
 
         // HACK(eddyb) LLVM inserts `llvm.assume` calls to preserve align attributes
         // during inlining. Unfortunately these may block other optimizations.
-        add("-preserve-alignment-assumptions-during-inlining=false", false);
+        //add("-preserve-alignment-assumptions-during-inlining=false", false);
 
         // Use non-zero `import-instr-limit` multiplier for cold callsites.
-        add("-import-cold-multiplier=0.1", false);
+        //add("-import-cold-multiplier=0.1", false);
 
         if sess.print_llvm_stats() {
             add("-stats", false);

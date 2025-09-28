@@ -1363,6 +1363,9 @@ impl Builder<'_> {
         // (unless explicitly specified otherwise). This will produce a somewhat
         // slower code but give way better compile times.
         {
+            /*
+             * Like other LLVM args, for some reason building from scratch on illumos does not seem
+             * to support this LLVM argument?
             let limit = match self.config.rust_thin_lto_import_instr_limit {
                 Some(limit) => Some(limit),
                 None if self.config.incremental => Some(10),
@@ -1375,6 +1378,7 @@ impl Builder<'_> {
             {
                 rustflags.arg(&format!("-Cllvm-args=-import-instr-limit={limit}"));
             }
+            */
         }
 
         if matches!(mode, Mode::Std) {
