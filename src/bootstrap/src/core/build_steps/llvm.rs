@@ -1510,6 +1510,17 @@ fn supported_sanitizers(
             .collect()
     };
 
+    let illumos_libs = |arch: &str, components: &[&str]| -> Vec<SanitizerRuntime> {
+        components
+            .iter()
+            .map(move |c| SanitizerRuntime {
+                cmake_target: format!("clang_rt.{c}-{arch}"),
+                path: out_dir.join(format!("build/lib/sunos/libclang_rt.{c}-{arch}.a")),
+                name: format!("librustc-{channel}_rt.{c}.a"),
+            })
+            .collect()
+    };
+
     let common_libs = |os: &str, arch: &str, components: &[&str]| -> Vec<SanitizerRuntime> {
         components
             .iter()
@@ -1544,7 +1555,7 @@ fn supported_sanitizers(
         "x86_64-unknown-netbsd" => {
             common_libs("netbsd", "x86_64", &["asan", "lsan", "msan", "tsan"])
         }
-        "x86_64-unknown-illumos" => common_libs("illumos", "x86_64", &["asan"]),
+        "x86_64-unknown-illumos" => illumos_libs("x86_64", &["asan"]),
         "x86_64-pc-solaris" => common_libs("solaris", "x86_64", &["asan"]),
         "x86_64-unknown-linux-gnu" => common_libs(
             "linux",
